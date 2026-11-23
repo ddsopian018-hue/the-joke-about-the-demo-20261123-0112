@@ -12,8 +12,8 @@ import sys
 from pathlib import Path
 
 JOKE = (
-    "My agent fixed the demo crash live, then asked the audience to approve "
-    "its own pull request before it would let us leave."
+    "My agent fixed the demo crash live, then refused to let anyone leave "
+    "until the audience approved its own pull request."
 )
 
 MAX_CODE_POINTS = 280
@@ -36,6 +36,10 @@ def validate_joke(joke: str) -> None:
             f"error: joke is {len(joke)} code points, over the "
             f"{MAX_CODE_POINTS} code-point limit"
         )
+    if "  " in joke:
+        sys.exit("error: joke must not contain double spaces")
+    if not joke.rstrip().endswith((".", "!", "?")):
+        sys.exit("error: joke must end with terminal punctuation")
 
 
 def main() -> None:
